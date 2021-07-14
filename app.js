@@ -18,11 +18,11 @@ mongoose.connect(databaseUrl, {
 const db = mongoose.connection;
 
 db.on('error', (error) => {
-    console.log(error)
+    console.error(error);
 });
 
 db.once('open', () => {
-    console.log('connected to mongoDB server');
+    console.log('Connected to MongoDB Server');
 });
 
 fs.readdir("./events/", (err, files) => {
