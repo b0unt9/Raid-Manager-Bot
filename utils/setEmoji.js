@@ -1,4 +1,4 @@
-const db = require('./database');
+const db = require('../database/raidSchema');
 
 module.exports = function setEmoji(serverid, raidid, channelid, textid, cb) {
     db.findOne({

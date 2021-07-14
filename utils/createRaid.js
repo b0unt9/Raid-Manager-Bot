@@ -1,4 +1,4 @@
-const db = require('./database');
+const db = require('../database/raidSchema');
 import { customAlphabet } from 'nanoid';
 const nanoid = customAlphabet('1234567890', 5);
 
