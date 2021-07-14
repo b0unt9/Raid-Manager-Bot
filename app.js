@@ -4,21 +4,10 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const schedule = require('node-schedule');
 const moment = require('moment');
-const DBL = require("dblapi.js");
 
 const client = new Discord.Client();
 client.config = require('./config.json');
 client.commands = new Enmap();
-
-const dbl = new DBL(client.config.topgg, client);
-
-dbl.on('posted', () => {
-    console.log('Server count posted!');
-})
-  
-dbl.on('error', e => {
-    console.log(`Oops! ${e}`);
-})
 
 moment.locale('ko');
 

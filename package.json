@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/sidetoy/The-Division-2-Raid-Manager-Bot#readme",
   "dependencies": {
-    "dblapi.js": "^2.4.1",
     "discord.js": "^12.5.3",
     "enmap": "^5.8.2",
     "moment": "^2.29.1",
