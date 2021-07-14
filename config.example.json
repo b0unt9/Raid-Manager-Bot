@@ -1,6 +1,0 @@
-{
-    "prefix": "!",
-    "database": "mongodb://127.0.0.1:27017/database",
-    "token":"Discord Bot Token",
-    "topgg": "Top.gg Token"
-}

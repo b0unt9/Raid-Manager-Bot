@@ -4,14 +4,14 @@ const fs = require('fs');
 const mongoose = require('mongoose');
 const schedule = require('node-schedule');
 const moment = require('moment');
+require("dotenv").config();
 
 const client = new Discord.Client();
-client.config = require('./config.json');
 client.commands = new Enmap();
 
 moment.locale('ko');
 
-mongoose.connect(client.config.database, {
+mongoose.connect(`mongodb://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}?authSource=${process.env.DATABASE_AUTHSOURCE}`, {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true
@@ -97,4 +97,4 @@ schedule.scheduleJob('* * * * * *', function () {
     })
 });
 
-client.login(client.config.token);
+client.login(process.env.TOKEN);

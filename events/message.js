@@ -11,10 +11,10 @@ module.exports = (client, message) => {
         }, function(error, raids) {
             let args
             if (error || !raids) return;
-            if (message.content.indexOf(client.config.prefix) !== 0) {
+            if (message.content.indexOf(process.env.PREFIX) !== 0) {
                 args = message.content.trim().split(/ +/g);
             } else {
-                args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
+                args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
             }
 
             const cmd = args.shift().toLowerCase();
@@ -24,9 +24,9 @@ module.exports = (client, message) => {
             command.run(client, message, args);
         });
     } else {
-        if (message.content.indexOf(client.config.prefix) !== 0) return;
+        if (message.content.indexOf(process.env.PREFIX) !== 0) return;
     
-        const args = message.content.slice(client.config.prefix.length).trim().split(/ +/g);
+        const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
         const cmd = args.shift().toLowerCase();
         const command = client.commands.get(cmd);
 
