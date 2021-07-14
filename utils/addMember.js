@@ -1,17 +1,18 @@
-const db = require('../database/raidSchema');
+const raidSchema = require('../database/raidSchema');
 
-module.exports = function addMember(serverid, raidid, memberid, cb) {
-    db.findOne({
-        serverid,
-        raidid
-    }, function(error, raids) {
-        if (error) return cb(error, null);
-        if (!raids) return cb('nonraid', null);
-        if (raids.raidmember.length === 8) return cb('full', null);
-        if (raids.raidmember.includes(memberid)) return cb('already', null);
-        raids.raidmember.push(memberid);
-        raids.save().then(function() {
-            return cb(null, raids);
-        });
-    });
+module.exports = async (guildId, raidId, memberId) => {
+    try {
+        let raidData = await raidSchema.findOne({guildId, raidId});
+
+        if (!raidData) throw 'notExist';
+        if (raidData.member.length === 8) throw 'fullMember';
+        if (raidData.member.includes(memberId)) throw 'alreadyJoin';
+
+        await raidData.member.push(memberId);
+        await raidData.save();
+
+        return raidData;
+    } catch (err) {
+        throw err;
+    }
 };
