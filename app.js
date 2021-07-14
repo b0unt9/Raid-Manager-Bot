@@ -7,7 +7,7 @@ client.commands = new Discord.Collection();
 const fs = require('fs');
 
 const mongoose = require('mongoose');
-const databaseUrl = `mongodb://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}?authSource=${process.env.DATABASE_AUTHSOURCE}`
+const databaseUrl = `mongodb+srv://${process.env.DATABASE_USERNAME}:${process.env.DATABASE_PASSWORD}@${process.env.DATABASE_URL}/${process.env.DATABASE_NAME}?authSource=${process.env.DATABASE_AUTHSOURCE}`
 
 mongoose.connect(databaseUrl, {
     useUnifiedTopology: true,
