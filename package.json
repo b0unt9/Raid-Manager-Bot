@@ -4,7 +4,7 @@
   "description": "Discord The Divison 2 Raid Manager Bot with discord.js",
   "main": "app.js",
   "scripts": {
-    "start": "node raidbot.js",
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
