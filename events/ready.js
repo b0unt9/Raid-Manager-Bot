@@ -1,7 +1,7 @@
-module.exports = (client) => {
+module.exports = async (client) => {
     console.log(`Logged in as ${client.user.tag}!`);
-    setInterval(() => {
-        client.user.setPresence({
+    setInterval(async () => {
+        await client.user.setPresence({
             activity: {
                 name: `!? => 도움말 | ${client.guilds.cache.size}개의 서버`
             }
