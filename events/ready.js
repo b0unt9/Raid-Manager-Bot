@@ -1,3 +1,5 @@
+const msgSchema = require("../database/msgSchema");
+
 module.exports = async (client) => {
     console.log(`Logged in as ${client.user.tag}!`);
     setInterval(async () => {
@@ -7,18 +9,18 @@ module.exports = async (client) => {
             }
         });
     }, 10000);
-    client.database.find({}, function(error, ch) {
-        if (error) return console.log(error);
-        if (!ch) return;
-        ch.forEach(function(data) {
+
+    try {
+        let msgList = await msgSchema.find({});
+        if (!msgList) return;
+        for (const msg of msgList) {
             try {
-                client.channels.cache.get(data.channelid).messages.fetch({
-                    around: data.textid,
-                    limit: 1
-                })
-            } catch (error) {
-                return;
+                await client.channels.cache.get(msg.chId).messages.fetch(msg.msgId);
+            } catch (err) {
+                continue;
             }
-        })
-    })
-}
+        }
+    } catch (err) {
+        return;
+    }
+};
