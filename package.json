@@ -1,11 +1,10 @@
 {
   "name": "the-division-2-raid-manager-bot",
   "version": "1.0.0",
-  "description": "Discord The Divison 2 Raid Manager Bot with discord.js",
+  "description": "Discord The divison 2 raid manager bot with discord.js",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
