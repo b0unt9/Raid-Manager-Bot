@@ -1,4 +1,6 @@
 const msgSchema = require("../database/msgSchema");
+const timeOutRaid = require('../utils/timeOutRaid');
+const raidAlert = require('../utils/raidAlert');
 
 module.exports = async (client) => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -23,4 +25,7 @@ module.exports = async (client) => {
     } catch (err) {
         return;
     }
+
+    timeOutRaid(client);
+    raidAlert(client);
 };
