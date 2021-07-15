@@ -19,7 +19,6 @@
   "homepage": "https://github.com/sidetoy/The-Division-2-Raid-Manager-Bot#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "moment": "^2.29.1",
     "moment-timezone": "^0.5.32",
     "mongoose": "^5.10.15",
     "nanoid": "^3.1.23",

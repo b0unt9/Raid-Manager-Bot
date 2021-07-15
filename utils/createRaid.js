@@ -1,7 +1,7 @@
 const raidSchema = require("../database/raidSchema");
 const { customAlphabet } = require("nanoid");
 const nanoid = customAlphabet('123456789', 6);
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 module.exports = async (guildId, type, master, time) => {
     try {

@@ -1,5 +1,4 @@
-const moment = require('moment');
-require('moment-timezone');
+const moment = require('moment-timezone');
 moment.locale('ko');
 
 module.exports = function timeCheck(args, cb) {
