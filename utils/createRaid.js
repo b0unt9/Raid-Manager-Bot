@@ -1,28 +1,37 @@
-const db = require('../database/raidSchema');
-import { customAlphabet } from 'nanoid';
-const nanoid = customAlphabet('1234567890', 5);
+const raidSchema = require("../database/raidSchema");
+const { customAlphabet } = require("nanoid");
+const nanoid = customAlphabet('123456789', 6);
+const moment = require('moment');
 
-module.exports = async function createRaid(serverid, raidtype, raidmaster, date, cb) {
-    let raidModel = new db();
-    let raid_id = null;
-    while (1) {
-        raid_id = await nanoid();
-        if (await db.exists({raidid: raid_id})) continue;
-        else break;
+module.exports = async (guildId, type, master, time) => {
+    try {
+        let raidModel = new raidSchema();
+        let raidId;
+
+        while (1) {
+            raidId = await nanoid();
+            if (await raidSchema.exists({raidId})) continue;
+            else break;
+        }
+
+        raidModel.raidId = raidId;
+        raidModel.guildId = [guildId];
+        raidModel.type = type;
+        raidModel.master = master;
+        raidModel.member = [master];
+
+        if (time) {
+            raidModel.time = time;
+            raidModel.limitTime = time;
+        } else {
+            raidModel.limitTime = moment().add('1', 'days');
+            raidModel.info = "출발시간이 정해지지 않았습니다";
+        }
+
+        await raidModel.save();
+
+        return raidModel;
+    } catch (err) {
+        throw err;
     }
-    raidModel.serverid = serverid;
-    raidModel.raidid = raid_id;
-    raidModel.raidtype = raidtype;
-    raidModel.raidmaster = raidmaster;
-    raidModel.raidmember = [raidmaster];
-    if (!date) {
-        raidModel.starttime = date;
-        raidModel.raiddetail = '출발시간이 정해지지 않았습니다';
-    } else {
-        raidModel.starttime = date;
-        raidModel.raiddetail = '세부정보가 없습니다';
-    }
-    raidModel.save().then(function () {
-        return cb(null, raidModel);
-    });
 };
