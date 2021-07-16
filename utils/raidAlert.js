@@ -8,7 +8,7 @@ async function getTypeText(type) {
     else if (type === 3) return '칠흑&철마';
 }
 
-module.exports = async (client) => {
+module.exports = (client) => {
     schedule.scheduleJob('0 * * * * *', async () => {
         let now = moment().tz("Asia/Seoul").seconds(0).milliseconds(0).add("10", "m");
         let raidList = await raidSchema.find({time: now});
@@ -22,13 +22,11 @@ module.exports = async (client) => {
                         await (await client.users.fetch(raidMember)).send(`**${guildName}**에서 ${typeText} 레이드가 10분 뒤 시작합니다. <@${raidMember}>`);
                     } catch (err) {
                         console.log(err);
-                        continue;
                     }
                 }
             }
         } catch (err) {
-            console.log(err);
-            return;
+            return console.log(err);
         }
     });
 };
