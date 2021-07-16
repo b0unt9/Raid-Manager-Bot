@@ -16,6 +16,8 @@ async function getDiffMsg(diffCode, eventMember, typeText) {
     else if (diffCode === 5) return `<@${eventMember}>님 께서 레이드의 공대장이 되었습니다`;
     else if (diffCode === 6) return `레이드의 출발 시간이 변경되었습니다`;
     else if (diffCode === 7) return `레이드의 정보가 변경되었습니다`;
+    else if (diffCode === 8) return `레이드를 가져왔습니다`;
+    else if (diffCode === 9) return `레이드가 삭제되었습니다`;
     else return null;
 }
 
