@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
-const moment = require('moment');
-require('moment-timezone');
+const moment = require('moment-timezone');
 moment.locale('ko');
 
 async function getTypeText(type) {
