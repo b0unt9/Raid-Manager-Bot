@@ -19,7 +19,7 @@ module.exports = async (client) => {
             try {
                 await client.channels.cache.get(msg.chId).messages.fetch(msg.msgId);
             } catch (err) {
-                continue;
+                console.error(err);
             }
         }
     } catch (err) {
