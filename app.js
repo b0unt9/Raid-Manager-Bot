@@ -48,4 +48,8 @@ fs.readdir("./commands/", (err, files) => {
     });
 });
 
+process.on('uncaughtException', (err) => {
+    console.error(err);
+});
+
 client.login(process.env.TOKEN);
