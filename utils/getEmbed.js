@@ -28,8 +28,8 @@ module.exports = async (client, raidInfo, diffCode, eventMember) => {
 
         let memberList = "";
 
-        await raidInfo.member.forEach((data) => {
-            memberList += `<@${data}> `
+        await raidInfo.member.forEach(member => {
+            memberList += `<@${member}> `
         });
 
         embed.setAuthor('디비전 레이드', `${client.user.displayAvatarURL()}`, '');
