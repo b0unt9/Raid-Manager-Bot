@@ -17,7 +17,7 @@ exports.run = async (client, message, args) => {
         let errMsg = await errorHandle(err);
         return message.channel.send(errMsg);
     }
-}
+};
 
 exports.config = {
     name: "레이드 나가기",
