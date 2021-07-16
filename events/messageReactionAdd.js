@@ -1,28 +1,31 @@
-module.exports = (client, reaction, user) => {
+const msgSchema = require("../database/msgSchema");
+const raidSchema = require("../database/raidSchema");
+const addMember = require("../utils/addMember");
+const removeMember = require("../utils/removeMember");
+const getEmbed = require("../utils/getEmbed");
+const errorHandle = require("../utils/errorHandle");
+const updateInfo = require("../utils/updateInfo");
+
+module.exports = async (client, reaction, user) => {
     if (user.bot) return;
-    if (reaction.emoji.name != "🤚") return;
-    client.database.findOne({
-        serverid: reaction.message.guild.id,
-        textid: reaction.message.id
-    }, function(error, raids) {
-        if (error) return reaction.message.channel.send("**봇에 오류가 발생했습니다**");
-        if (!raids) return;
-        if (!raids.raidmember.includes(user.id)) {
-            client.addMember(reaction.message.guild.id, raids.raidid, user.id, function(error, raids) {
-                if (error == 'full') return reaction.message.channel.send(`**<@${user.id}>님 해당 레이드는 인원이 모두 찼습니다**`);
-                else if (error) return reaction.message.channel.send(error);
-                client.getEmbed(client, raids, 2, user.id, function(embed) {
-                    reaction.message.edit(embed);
-                });
-            });
+    if (reaction.emoji.name !== "🤚") return;
+    try {
+        let msgData = await msgSchema.findOne({guildId: reaction.message.guild.id, msgId: reaction.message.id});
+        if (!msgData) return;
+        let raid = await raidSchema.findOne({raidId: msgData.raidId});
+        if (!raid.member.includes(user.id)) {
+            let raidData = await addMember(reaction.message.guild.id, raid.raidId, user.id);
+            let embed = await getEmbed(client, raidData, 2, user.id);
+            reaction.message.edit(embed);
+            await updateInfo(client, raidData, 2, user.id);
         } else {
-            client.removeMember(reaction.message.guild.id, raids.raidid, user.id, function(error, raids) {
-                if (error == 'raidmaster') return reaction.message.channel.send("**공대장은 레이드에서 나갈수 없습니다. 공대장을 변경후 시도해주세요**");
-                else if (error) return reaction.message.channel.send(error);
-                client.getEmbed(client, raids, 3, user.id, function(embed) {
-                    reaction.message.edit(embed);
-                });
-            });
-        };
-    });
-};
+            let raidData = await removeMember(reaction.message.guild.id, raid.raidId, user.id);
+            let embed = await getEmbed(client, raidData, 3, user.id);
+            reaction.message.edit(embed);
+            await updateInfo(client, raidData, 3, user.id);
+        }
+    } catch (err) {
+        let errMsg = await errorHandle(err);
+        return reaction.message.channel.send(errMsg);
+    }
+}
