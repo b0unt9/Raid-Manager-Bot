@@ -11,7 +11,7 @@ async function getRaidType(type) {
     } else if (type === "흑마" || type === "di") {
         return '3';
     }
-};
+}
 
 async function getRaidTypeText(type) {
     if (type === "칠흑" || type === "dh") {
@@ -21,7 +21,7 @@ async function getRaidTypeText(type) {
     } else if (type === "흑마" || type === "di") {
         return '칠흑&철마';
     }
-};
+}
 
 exports.run = async (client, message, args) => {
     let raidType, raidTypeText, filter;
