@@ -29,6 +29,6 @@ module.exports = async (args) => {
 
         return result;
     } else {
-        throw 'wrongTime'
+        throw new Error('wrongTime');
     }
 };

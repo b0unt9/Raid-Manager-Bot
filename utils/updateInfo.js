@@ -10,6 +10,6 @@ module.exports = async (client, raidData, diffCode, eventMember) => {
             }
         });
     } catch (err) {
-        throw err;
+        throw new Error(err);
     }
 };
