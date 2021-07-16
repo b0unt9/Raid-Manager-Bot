@@ -7,10 +7,10 @@ const errorHandle = require("../utils/errorHandle");
 
 exports.run = async (client, message, args) => {
     try {
-        if (!args[0]) return message.channel.send("**⚠️공대장을 변경할 레이드의 고유 ID를 입력해주세요 (예시: /leader 123456 @member#1234)**");
+        if (!args[0]) return message.channel.send("**⚠️공대장을 변경할 레이드의 고유 ID를 입력해주세요 (예시: /공대장 123456 @member#1234)**");
 
         let member = message.mentions.members.first() || message.guild.members.cache.get(args[1])
-        if (!member.id) return message.channel.send("**⚠️변경할 공대장을 멘션 혹은 ID를 입력해주세요 (예시: /leader 123456 @member#1234)**");
+        if (!member.id) return message.channel.send("**⚠️변경할 공대장을 멘션 혹은 ID를 입력해주세요 (예시: /공대장 123456 @member#1234)**");
 
         let raidData = await raidSchema.findOne({guildId: message.guild.id, raidId: args[0]});
         if (!raidData) return message.channel.send("**⚠️해당 레이드는 존재하지 않습니다**");
