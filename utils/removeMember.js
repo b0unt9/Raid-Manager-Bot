@@ -1,17 +1,18 @@
-const db = require('./database');
+const raidSchema = require("../database/raidSchema");
 
-module.exports = function removeMember(serverid, raidid, memberid, cb) {
-    db.findOne({
-        serverid,
-        raidid
-    }, function(error, raids) {
-        if (error) return cb(error, null);
-        if (!raids) return cb('nonraid', null);
-        if (memberid === raids.raidmaster) return cb('raidmaster', null);
-        if (!raids.raidmember.includes(memberid)) return cb('nonmember', null);
-        raids.raidmember.splice(raids.raidmember.indexOf(memberid), 1);
-        raids.save().then(function() {
-            return cb(null, raids);
-        });
-    });
+module.exports = async (guildId, raidId, memberId) => {
+    try {
+        let raidData = await raidSchema.findOne({guildId, raidId});
+
+        if (!raidData) throw 'notExist';
+        if (memberId === raidData.master) throw 'raidMaster';
+        if (!raidData.member.includes(memberId)) throw 'notMember';
+
+        await raidData.member.splice(raidData.member.indexOf(memberId), 1);
+        await raidData.save();
+
+        return raidData;
+    } catch (err) {
+        throw err;
+    }
 };

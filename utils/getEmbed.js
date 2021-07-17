@@ -1,62 +1,60 @@
 const Discord = require('discord.js');
-const moment = require('moment');
-require('moment-timezone');
+const moment = require('moment-timezone');
 moment.locale('ko');
 
-/*
-[Diffcode]
-1: 생성
-2: 참여
-3: 불참
-4: 강퇴
-5: 공대장변경
-6: 시간변경
-7: 정보변경
-*/
+async function getTypeText(type) {
+    if (type === 1)  return '칠흑';
+    else if (type === 2) return '철마';
+    else if (type === 3) return '칠흑&철마';
+}
 
-async function getRaidtype(typenum) {
-    if (typenum === 1)  return '칠흑';
-    else if (typenum === 2) return '철마';
-    else if (typenum === 3) return '칠흑&철마';
-};
+async function getDiffMsg(diffCode, eventMember, typeText) {
+    if (diffCode === 1) return `<@${eventMember}>님 께서 ${typeText} 레이드를 생성했습니다.`;
+    else if (diffCode === 2) return `<@${eventMember}>님 께서 레이드에 참여했습니다.`;
+    else if (diffCode === 3) return `<@${eventMember}>님 께서 레이드에서 나가셨습니다`;
+    else if (diffCode === 4) return `<@${eventMember}>님 께서 레이드에서 강제 퇴출 되었습니다`;
+    else if (diffCode === 5) return `<@${eventMember}>님 께서 레이드의 공대장이 되었습니다`;
+    else if (diffCode === 6) return `레이드의 출발 시간이 변경되었습니다`;
+    else if (diffCode === 7) return `레이드의 정보가 변경되었습니다`;
+    else if (diffCode === 8) return `레이드를 가져왔습니다`;
+    else if (diffCode === 9) return `레이드가 삭제되었습니다`;
+    else return null;
+}
 
-async function getDiffmessage(diffcode, eventmember, raidtypetext) {
-    if (diffcode === 1) return `<@${eventmember}>님 께서 ${raidtypetext} 레이드를 생성했습니다.`;
-    else if (diffcode === 2) return `<@${eventmember}>님 께서 레이드에 참여했습니다.`;
-    else if (diffcode === 3) return `<@${eventmember}>님 께서 레이드에서 나가셨습니다`;
-    else if (diffcode === 4) return `<@${eventmember}>님 께서 레이드에서 강제 퇴출 되었습니다`;
-    else if (diffcode === 5) return `<@${eventmember}>님 께서 레이드의 공대장이 되었습니다`;
-    else if (diffcode === 6) return `레이드의 출발 시간이 변경되었습니다`;
-    else if (diffcode === 7) return `레이드의 정보가 변경되었습니다`;
-};
+module.exports = async (client, raidInfo, diffCode, eventMember) => {
+    try {
+        let embed = new Discord.MessageEmbed();
 
-module.exports = async function getEmbed(client, raid, diffcode, eventmember) {
-    let raidtypetext = await getRaidtype(raid.raidtype);
-    let diffmessage = await getDiffmessage(diffcode, eventmember, raidtypetext);
-    let raidmemberlist = "", embed = new Discord.MessageEmbed();
+        let typeText = await getTypeText(raidInfo.type);
+        let diffMsg = await getDiffMsg(diffCode, eventMember, typeText);
 
-    await raid.raidmember.forEach(function (data) {
-        raidmemberlist += `<@${data}> `
-    })
+        let memberList = "";
 
-    embed.setColor(Math.floor(Math.random() * 16777214) + 1)
-        .setAuthor('디비전 레이드', `${client.user.displayAvatarURL()}`, '')
+        await raidInfo.member.forEach(member => {
+            memberList += `<@${member}> `
+        });
 
-    if (raid.starttime) {
-        embed.setTitle(`${moment(raid.starttime).format("MM월 DD일 a h시 mm분")} ${raidtypetext} 레이드 모집중`)
-            .addField("시작 시각", `${moment(raid.starttime).format("MM월 DD일 a h시 mm분")}`, true)
-    } else {
-        embed.setTitle(`${raidtypetext} 레이드 모집중`)
+        embed.setAuthor('디비전 레이드', `${client.user.displayAvatarURL()}`, '');
+
+        if (raidInfo.time) {
+            embed.setTitle(`${moment(raidInfo.time).format("MM월 DD일 a h시 mm분")} ${typeText} 레이드 모집중`);
+            embed.addField("시작 시각", `${moment(raidInfo.time).format("MM월 DD일 a h시 mm분")}`, true);
+        } else {
+            embed.setTitle(`${typeText} 레이드 모집중`);
+            embed.addField("시작 시각", `미정 혹은 세부정보 참조`, true);
+        }
+
+        embed.addField("레이드 ID", raidInfo.raidId, true)
+            .addField("공대장", `<@${raidInfo.master}>`, true)
+            .addField("세부정보", raidInfo.info)
+            .addField(`공대원 (${raidInfo.member.length}/8)`, memberList)
+            .setFooter(`참여방법: 🤚를 누르거나 !참여 ${raidInfo.raidId}`)
+            .setTimestamp();
+
+        if (diffMsg) embed.addField("변경 사항", diffMsg);
+
+        return embed;
+    } catch (err) {
+        throw err;
     }
-
-    embed.addField("고유 ID", raid.raidid, true)
-        .addField("공대장", `<@${raid.raidmaster}>`, true)
-        .addField("세부정보", raid.raiddetail)
-        .addField(`공대원 (${raid.raidmember.length}/8)`, raidmemberlist)
-        .setFooter(`참여방법: 🤚를 누르거나 !참여 ${raid.raidid}`)
-        .setTimestamp();
-
-    if (diffmessage) embed.addField("변경 사항", diffmessage);
-
-    return embed;
 };
