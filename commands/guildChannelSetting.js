@@ -2,6 +2,7 @@ const guildSchema = require("../database/guildSchema");
 const checkGuildAdmin = require("../utils/checkGuildAdmin");
 
 exports.run = async (client, message, args) => {
+    return;
     if (!(await checkGuildAdmin(message))) return message.channel.send("**⚠️관리자만 해당 명령어를 사용할 수 있습니다**");
 
     let settings = await guildSchema.findOne({guildId: message.guild.id});
