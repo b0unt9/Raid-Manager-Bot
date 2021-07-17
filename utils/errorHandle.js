@@ -24,7 +24,7 @@ module.exports = async (err) => {
             break;
     }
 
-    errMsg = "**⚠️" + errMsg + "**";
+    errMsg = "**⚠ " + errMsg + "**";
 
     return errMsg;
 };

@@ -38,8 +38,8 @@ exports.run = async (client, message, args) => {
         .limit(3)
         .then(async (raidList) => {
             if (raidList.length === 0) {
-                if (raidType) return message.channel.send(`**⚠️모집 중인 ${raidTypeText} 레이드가 없습니다**`);
-                else return message.channel.send(`**⚠️모집 중인 레이드가 없습니다**`);
+                if (raidType) return message.channel.send(`**⚠ 모집 중인 ${raidTypeText} 레이드가 없습니다**`);
+                else return message.channel.send(`**⚠ 모집 중인 레이드가 없습니다**`);
             }
             try {
                 for (const raidData of raidList) {
