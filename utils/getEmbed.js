@@ -37,8 +37,8 @@ module.exports = async (client, raidInfo, diffCode, eventMember) => {
         embed.setAuthor('디비전 레이드', `${client.user.displayAvatarURL()}`, '');
 
         if (raidInfo.time) {
-            embed.setTitle(`${moment(raidInfo.time).format("MM월 DD일 a h시 mm분")} ${typeText} 레이드 모집중`);
-            embed.addField("시작 시각", `${moment(raidInfo.time).format("MM월 DD일 a h시 mm분")}`, true);
+            embed.setTitle(`${moment(raidInfo.time).tz("Asia/Seoul").format("MM월 DD일 a h시 mm분")} ${typeText} 레이드 모집중`);
+            embed.addField("시작 시각", `${moment(raidInfo.time).tz("Asia/Seoul").format("MM월 DD일 a h시 mm분")}`, true);
         } else {
             embed.setTitle(`${typeText} 레이드 모집중`);
             embed.addField("시작 시각", `미정 혹은 세부정보 참조`, true);
