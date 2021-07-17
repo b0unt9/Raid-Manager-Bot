@@ -1,4 +1,4 @@
-require("dotenv").config();
+if (process.argv[2] === 'dev') require("dotenv").config();
 
 const Discord = require('discord.js');
 const client = new Discord.Client();
