@@ -1,11 +1,12 @@
 const guildSchema = require("../database/guildSchema");
 const checkGuildAdmin = require("../utils/checkGuildAdmin");
+const prefix = JSON.parse(process.env.PREFIX);
 
 module.exports = async (client, message) => {
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
 
-    if (message.content.indexOf(process.env.PREFIX) !== 0) return;
+    if (!prefix.some(pf => message.content.startsWith(pf))) return;
 
     const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
     const cmd = args.shift().toLowerCase();
