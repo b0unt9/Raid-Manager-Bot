@@ -25,10 +25,13 @@ async function getRaidTypeText(type) {
 
 exports.run = async (client, message, args) => {
     let raidType, raidTypeText, filter;
-    if (args[0]) {
+    let raidTypeList = ['칠흑', '철마', '흑마', 'dh', 'ih', 'di'];
+    if (args[0] && raidTypeList.includes(args[0])) {
         raidType = await getRaidType(args[0]);
         raidTypeText = await getRaidTypeText(args[0]);
         filter = {guildId: message.guild.id, type: raidType};
+    } else if (args[0]) {
+        return message.channel.send(`**⚠ 잘못된 레이드 종류 입니다 (칠흑, 철마, 흑마, dh, ih, di)**`);
     } else {
         filter = {guildId: message.guild.id};
     }
@@ -41,6 +44,7 @@ exports.run = async (client, message, args) => {
                 if (raidType) return message.channel.send(`**⚠ 모집 중인 ${raidTypeText} 레이드가 없습니다**`);
                 else return message.channel.send(`**⚠ 모집 중인 레이드가 없습니다**`);
             }
+
             try {
                 for (const raidData of raidList) {
                     let embed = await getEmbed(client, raidData, 0, null);
