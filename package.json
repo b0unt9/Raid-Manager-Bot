@@ -4,7 +4,8 @@
   "description": "Discord The division 2 raid manager bot with discord.js",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "node app.js dev"
   },
   "repository": {
     "type": "git",
