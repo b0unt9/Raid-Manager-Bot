@@ -1,13 +1,25 @@
 const msgSchema = require("../database/msgSchema");
 const timeOutRaid = require('../utils/timeOutRaid');
 const raidAlert = require('../utils/raidAlert');
+const package = require('../package.json');
 
 module.exports = async (client) => {
     console.log(`Logged in as ${client.user.tag}!`);
+
+    let activities = [
+        `${client.guilds.cache.size}개의 서버와 함께하는 중`,
+        "/명렁어",
+        `Uptime : ${Math.floor(client.uptime / 3600000)}H`,
+        `V${package.version}`
+    ];
+
     setInterval(async () => {
+        const randomIndex = Math.floor(Math.random() * (activities.length - 1) + 1);
+        const newActivity = activities[randomIndex];
+
         await client.user.setPresence({
             activity: {
-                name: `!? => 도움말 | ${client.guilds.cache.size}개의 서버`
+                name: newActivity
             }
         });
     }, 10000);
