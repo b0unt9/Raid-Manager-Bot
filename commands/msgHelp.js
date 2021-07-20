@@ -6,7 +6,7 @@ exports.run = async (client, message, args) => {
     try {
         let embed = new Discord.MessageEmbed();
         embed.setTitle(`디비전 레이드 명령어 V${package.version}`)
-            .setAuthor(`${client.user.name}`, `${client.user.displayAvatarURL()}`, '')
+            .setAuthor(`${client.user.username}`, `${client.user.displayAvatarURL()}`, '')
             .setDescription('디비전2 레이드 모집을 간편하게 도와주는 디스코드 봇\n<>은 필수 인수, ()은 선택 인수')
             .setFooter(`버전 : V${package.version} / 개발 : SideToy / 운영 : FlareBrick / 문의 : dbots@flarebrick.com`)
             .addField('명령어 안내', '/도움말, /명령어, /help, /cmd')
@@ -20,9 +20,9 @@ exports.run = async (client, message, args) => {
             .addField('공대장 변경', '/공대장 <레이드 ID> <@멤버>, /leader <Raid ID> <@member>')
             .addField('레이드 시간 변경', '/시간 (n시 m분), /time (n시 m분)')
             .addField('레이드 삭제', '/삭제 <레이드 ID>, /delete <Raid ID>')
-            .addField('레이드 가져오기', '/가져오기 <레이드 ID>, /get <Raid ID>')
+            .addField('레이드 가져오기', '/가져오기 <레이드 ID>, /get <Raid ID>');
 
-
+        return message.channel.send(embed);
     } catch (err) {
         let errMsg = await errorHandle(err);
         return message.channel.send(errMsg);
