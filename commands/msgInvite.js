@@ -8,8 +8,9 @@ exports.run = async (client, message, args) => {
             .setAuthor(`${client.user.name}`, `${client.user.displayAvatarURL()}`, '')
             .addField('봇 초대', 'https://top.gg/bot/781757459307823144')
             .addField('Github Repo', 'https://github.com/sidetoy/The-Division-2-Raid-Manager-Bot')
-            .setFooter('개발 : SideToy / 운영 : FlareBrick / 문의 : dbots@flarebrick.com')
+            .setFooter('개발 : SideToy / 운영 : FlareBrick / 문의 : dbots@flarebrick.com');
 
+        return message.channel.send(embed);
     } catch (err) {
         let errMsg = await errorHandle(err);
         return message.channel.send(errMsg);
