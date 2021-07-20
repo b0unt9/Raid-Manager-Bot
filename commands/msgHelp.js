@@ -31,5 +31,5 @@ exports.run = async (client, message, args) => {
 
 exports.config = {
     name: "도움말",
-    commands: ["도움말", "명령어", "help", "cmd"]
+    commands: ["도움말", "명령어", "help", "cmd", "?"]
 };
