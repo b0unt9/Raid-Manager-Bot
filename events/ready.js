@@ -9,7 +9,6 @@ module.exports = async (client) => {
     let activities = [
         `${client.guilds.cache.size}개의 서버와 함께하는 중`,
         "/명렁어",
-        `Uptime : ${Math.floor(client.uptime / 3600000)}H`,
         `V${package.version}`
     ];
 
