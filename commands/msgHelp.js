@@ -1,13 +1,14 @@
 const Discord = require('discord.js');
 const errorHandle = require("../utils/errorHandle");
+const package = require('../package.json');
 
 exports.run = async (client, message, args) => {
     try {
         let embed = new Discord.MessageEmbed();
-        embed.setTitle('디비전 레이드 명령어')
+        embed.setTitle(`디비전 레이드 명령어 V${package.version}`)
             .setAuthor(`${client.user.name}`, `${client.user.displayAvatarURL()}`, '')
             .setDescription('디비전2 레이드 모집을 간편하게 도와주는 디스코드 봇\n<>은 필수 인수, ()은 선택 인수')
-            .setFooter('개발 : SideToy / 운영 : FlareBrick / 문의 : dbots@flarebrick.com')
+            .setFooter(`버전 : V${package.version} / 개발 : SideToy / 운영 : FlareBrick / 문의 : dbots@flarebrick.com`)
             .addField('명령어 안내', '/도움말, /명령어, /help, /cmd')
             .addField('봇 추가 안내', '/초대, /invite')
             .addField('레이드 목록', '// (칠흑, 철마, 흑마), /목록 (칠흑, 철마, 흑마), /list (dh, ih, di), /l (dh, ih, di)')
