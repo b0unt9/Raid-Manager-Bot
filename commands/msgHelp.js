@@ -19,6 +19,7 @@ exports.run = async (client, message, args) => {
             .addField('칠흑&철마 레이드 생성', '/흑마 (n시 m분), /di (n시 m분)')
             .addField('공대장 변경', '/공대장 <레이드 ID> <@멤버>, /leader <Raid ID> <@member>')
             .addField('레이드 시간 변경', '/시간 (n시 m분), /time (n시 m분)')
+            .addField('레이드 정보 변경', '/정보 <레이드 ID> (레이드 정보), /info <Raid ID> (Raid Information)')
             .addField('레이드 삭제', '/삭제 <레이드 ID>, /delete <Raid ID>')
             .addField('레이드 가져오기', '/가져오기 <레이드 ID>, /get <Raid ID>');
 
