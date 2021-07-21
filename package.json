@@ -1,6 +1,6 @@
 {
   "name": "the-division-2-raid-manager-bot",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "Discord The division 2 raid manager bot with discord.js",
   "main": "app.js",
   "scripts": {
