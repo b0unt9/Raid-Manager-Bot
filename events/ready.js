@@ -1,6 +1,7 @@
 const msgSchema = require("../database/msgSchema");
 const timeOutRaid = require('../utils/timeOutRaid');
 const raidAlert = require('../utils/raidAlert');
+const TopGG = require('../utils/topgg');
 const package = require('../package.json');
 
 module.exports = async (client) => {
@@ -39,4 +40,5 @@ module.exports = async (client) => {
 
     timeOutRaid(client);
     raidAlert(client);
+    TopGG(client);
 };
