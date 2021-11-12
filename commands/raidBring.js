@@ -4,8 +4,10 @@ const setMsgDB = require("../utils/setMsgDB");
 const errorHandle = require("../utils/errorHandle");
 
 exports.run = async (client, message, args) => {
-    if (!args[0]) return message.channel.send("**⚠️가져올 레이드 ID를 입력해주세요**");
     try {
+        if (!args[0]) throw 'emptyRaidID';
+        if (isNaN(args[0]) || args[0].length !== 6) throw 'wrongRaidID';
+
         let raidData = await raidSchema.findOne({raidId: args[0]});
         if (!raidData) return message.channel.send("**⚠️해당 레이드는 존재하지 않습니다**");
         if (message.member.id !== raidData.master) return message.channel.send("**⚠️해당 레이드의 공대장만 가져올 수 있습니다**");

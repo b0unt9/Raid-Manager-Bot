@@ -7,7 +7,8 @@ const errorHandle = require("../utils/errorHandle");
 
 exports.run = async (client, message, args) => {
     try {
-        if (!args[0]) return message.channel.send("**⚠️세부정보를 변경할 레이드의 고유 ID를 입력해주세요**");
+        if (!args[0]) throw 'emptyRaidID';
+        if (isNaN(args[0]) || args[0].length !== 6) throw 'wrongRaidID';
 
         let raidData = await raidSchema.findOne({guildId: message.guild.id, raidId: args[0]});
         if (!raidData) return message.channel.send("**⚠️해당 레이드는 존재하지 않습니다**");

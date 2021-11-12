@@ -19,6 +19,12 @@ module.exports = async (err) => {
         case "wrongTime":
             errMsg = "잘못된 시간 형식입니다";
             break;
+        case "emptyRaidID":
+            errMsg = "레이드 ID를 입력해주세요";
+            break;
+        case "wrongRaidID":
+            errMsg = "올바르지 않은 레이드 ID 입니다";
+            break;
         default:
             errMsg = err;
             break;

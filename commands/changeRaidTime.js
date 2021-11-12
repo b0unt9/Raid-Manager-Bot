@@ -9,8 +9,10 @@ const updateInfo = require("../utils/updateInfo");
 const errorHandle = require("../utils/errorHandle");
 
 exports.run = async (client, message, args) => {
-    if (!args[0]) return message.channel.send("**⚠️시작 시간을 변경할 레이드 ID를 입력해주세요**");
     try {
+        if (!args[0]) throw 'emptyRaidID';
+        if (isNaN(args[0]) || args[0].length !== 6) throw 'wrongRaidID';
+
         let raidData = await raidSchema.findOne({guildId: message.guild.id, raidId: args[0]});
         if (!raidData) return message.channel.send("**⚠️해당 레이드는 존재하지 않습니다**");
         if (message.member.user.id !== raidData.master && !(await checkGuildAdmin(message))) return message.channel.send("**⚠️공대장만 공대장을 변경할 수 있습니다**");
