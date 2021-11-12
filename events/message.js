@@ -1,5 +1,5 @@
-const guildSchema = require("../database/guildSchema");
-const checkGuildAdmin = require("../utils/checkGuildAdmin");
+// const guildSchema = require("../database/guildSchema");
+// const checkGuildAdmin = require("../utils/checkGuildAdmin");
 const prefix = JSON.parse(process.env.PREFIX);
 
 module.exports = async (client, message) => {
